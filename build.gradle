@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.25.0'
+    implementation group: 'org.testng', name: 'testng', version: '7.10.2'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.9'
+    testImplementation 'io.qameta.allure:allure-testng:2.22.0'
+}
+
+test {
+    useTestNG() {
+        listeners << 'io.qameta.allure.testng.AllureTestNg'
+    }
+}
+
+def registerTask(String taskName, String suitePath){
+    tasks.register(taskName, Test){
+        useTestNG(){
+            suites suitePath
+        }
+        if(project.hasProperty('browser')){
+            systemProperty 'browser', "${browser}"
+        }
+        finalizedBy 'allureReport' // Запуск allureReport после завершения тестов
+    }
+}
+
+registerTask('smoke','src/test/resources/smoke.xml')
+registerTask('regression','src/test/resources/regression.xml')
+registerTask('accept','src/test/resources/accept.xml')
+registerTask('login','src/test/resources/login.xml')
+
+tasks.register('allure') {
+    dependsOn 'allureServe' // Запускает allureServe при выполнении задачи allure
+}
+tasks.register('copyAllureHistory') {
+    doLast {
+        def allureReportDir = file("$buildDir/reports/allure-report")
+        def allureResultsDir = file("$buildDir/allure-results")
+
+        def historyDir = new File(allureReportDir, "history")
+        def resultsHistoryDir = new File(allureResultsDir, "history")
+
+        if (historyDir.exists()) {
+            copy {
+                from historyDir
+                into resultsHistoryDir
+            }
+        }
+    }
+}
+
+tasks.named('allureReport') {
+    dependsOn 'copyAllureHistory' // Ensure this task runs before generating the report
+}
+
+// gradle allureReport
+// gradle allureServe
