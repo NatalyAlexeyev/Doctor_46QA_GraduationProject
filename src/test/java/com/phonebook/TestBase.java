@@ -11,6 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -51,7 +52,7 @@ public class TestBase {
             logger.info("Test is PASSED: [" + method.getName() + "], with data: [" + parameters + "]");
         } else {
             try {
-                app.getUserHelper().isAlertPresent();
+               app.isAlertPresent();
             } catch (Exception ignore) {
             }
 
@@ -59,16 +60,13 @@ public class TestBase {
             logger.error("Test is FAILED: [" + method.getName() + "], with data: [" + parameters + "]");
 
             // Делаем и прикрепляем скриншот
-            String screenshotPath = app.getUserHelper().takeScreenshot();
+            String screenshotPath = app.takeScreenshot();
             attachScreenshot(screenshotPath);
             logger.error("Screenshot: [" + screenshotPath + "]");
         }
 
         logger.info("Test is ended: [" + method.getName() + "]");
     }
-
-
-
 
     @Attachment(value = "Screenshot", type = "image/png")
     public byte[] attachScreenshot(String screenshotPath) {

@@ -10,12 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class BaseHelper {
-    Logger logger = LoggerFactory.getLogger(BaseHelper.class);
+public class BasePage {
+    Logger logger = LoggerFactory.getLogger(BasePage.class);
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    public BaseHelper(WebDriver driver, WebDriverWait wait) {
+    public BasePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
     }

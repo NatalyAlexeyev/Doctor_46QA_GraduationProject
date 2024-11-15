@@ -1,15 +1,15 @@
 package com.phonebook.fw;
 
-import com.phonebook.core.BaseHelper;
+import com.phonebook.core.BasePage;
 import com.phonebook.pages.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-public class UserHelper extends BaseHelper {
+public class UserPage extends BasePage {
 
-    public UserHelper(WebDriver driver, WebDriverWait wait) {
+    public UserPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
 

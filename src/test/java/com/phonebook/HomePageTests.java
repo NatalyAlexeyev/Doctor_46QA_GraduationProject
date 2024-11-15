@@ -1,5 +1,6 @@
 package com.phonebook;
 
+import com.phonebook.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -8,12 +9,14 @@ public class HomePageTests extends TestBase {
 
     @BeforeMethod
     public void preCondition() {
-        app.driver.get("https://telranedu.web.app/home");
+
+        app.driver.get("https://gesundheitspraxis-wertvoll.de");
     }
 
     @Test
     public void isHomeComponentPresentTest() {
-        Assert.assertTrue(app.getHomeHelper().isHomeComponentPresent(),"Item not found on page");
+        HomePage homePage = new HomePage(app.driver, app.wait);
+        Assert.assertTrue(homePage.isHomeComponentPresent(),"Item not found on page");
         System.out.println("'HomeComponent' element found on the home page");
     }
 

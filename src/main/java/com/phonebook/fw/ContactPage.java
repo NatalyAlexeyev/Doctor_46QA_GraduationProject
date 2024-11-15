@@ -1,6 +1,6 @@
 package com.phonebook.fw;
 
-import com.phonebook.core.BaseHelper;
+import com.phonebook.core.BasePage;
 import com.phonebook.pages.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -10,10 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class ContactHelper extends BaseHelper {
+public class ContactPage extends BasePage {
     public final String CONTACT_LOCATOR = "contact-item_card__2SOIM";
 
-    public ContactHelper(WebDriver driver, WebDriverWait wait) {
+    public ContactPage(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
     }
 
